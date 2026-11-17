@@ -28,8 +28,8 @@ class Command(BaseCommand):
                 self.style.SUCCESS("Assessment admin created.")
             )
         else:
-    self.stdout.write(
-        self.style.WARNING(
-            "Admin account already exists. No changes made."
-        )
-    )
+            self.stdout.write(
+                self.style.WARNING(
+                    "Admin account already exists. No changes made."
+                )
+            )
