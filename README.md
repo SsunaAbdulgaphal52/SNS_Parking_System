@@ -18,6 +18,7 @@ The Spotlight Parking System is a web-based application developed using Django t
 | 1 | Ssuna Abdulgaphal | 224-063012-29626 |
 | 2 | Serderm Lukwago Ahmed | 224-063011-29965 |
 | 3 | Nasser Sanie Waiswa | 224-063011-31946 |
+| 4 | Tamuzadde Twaha Muhammad | 224-063012-31794 |
 
 ## System Features
 - User authentication and login
