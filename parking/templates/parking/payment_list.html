@@ -1,0 +1,39 @@
+{% extends 'parking/base.html' %}
+
+{% block title %}Payments{% endblock %}
+
+{% block content %}
+    <h2>Payments</h2>
+    <p><a href="{% url 'make_payment' %}" class="button js-modal-trigger">Make a Payment</a></p>
+    {% if not user.is_staff %}
+        <p>You can only see the payments of your own lots.</p>
+    {% endif %}
+
+    <table>
+        <tr><th>ID</th><th>Ticket</th><th>Amount</th><th>Method</th><th>Status</th><th>Date</th><th>Actions</th></tr>
+        {% for x in payments %}
+        <tr>
+            <td>{{ x.payment_id }}</td>
+            <td>{{ x.ticket }}</td>
+            <td>{{ x.amount }}</td>
+            <td>{{ x.method }}</td>
+            <td>{{ x.payment_status }}</td>
+            <td>{{ x.payment_date }}</td>
+            <td>
+                <a href="{% url 'receipt' x.pk %}" class="icon-btn" title="Receipt"><i class="fa-solid fa-receipt"></i></a>
+                {% if user.is_staff %}
+                    <a href="{% url 'payment_edit' x.pk %}" class="icon-btn edit js-modal-trigger" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
+
+                    <!-- script.js asks "Are you sure?" before this form is sent -->
+                    <form method="post" action="{% url 'payment_delete' x.pk %}" class="delete-form">
+                        {% csrf_token %}
+                        <button type="submit" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                    </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="7">No payments yet.</td></tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'parking/base.html' %}
+
+{% block title %}Staff{% endblock %}
+
+{% block content %}
+    <h2>Staff</h2>
+    <p>
+        <a href="{% url 'staff_add' %}" class="button js-modal-trigger">Add Attendant</a>
+    </p>
+    <p>An attendant can only work in the lots ticked for him or her. Managers work in every lot.</p>
+
+    <table>
+        <tr><th>Username</th><th>Role</th><th>Lots</th><th>Actions</th></tr>
+        {% for row in rows %}
+        <tr>
+            <td>{{ row.user.username }}</td>
+            <td>{{ row.role }}</td>
+            <td>{{ row.lots }}</td>
+            <td>
+                {% if row.role == 'Attendant' %}
+                    <a href="{% url 'staff_edit' row.user.pk %}" class="icon-btn edit js-modal-trigger" title="Change lots"><i class="fa-solid fa-pen-to-square"></i></a>
+
+                    <form method="post" action="{% url 'staff_delete' row.user.pk %}" class="delete-form">
+                        {% csrf_token %}
+                        <button type="submit" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                    </form>
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

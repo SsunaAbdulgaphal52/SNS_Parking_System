@@ -1,0 +1,76 @@
+{% extends 'parking/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h2>Dashboard</h2>
+    <p>
+        Welcome, {{ user.username }} ({% if user.is_staff %}Manager{% else %}Attendant{% endif %}).
+        <a href="{% url 'park_car' %}" class="button js-modal-trigger">Park a Car</a>
+        <a href="{% url 'make_payment' %}" class="button js-modal-trigger">Make Payment</a>
+    </p>
+
+    <table>
+        <tr><th>Item</th><th>Total</th></tr>
+        {% if user.is_staff %}
+        <tr><td>Car owners</td><td>{{ owner_count }}</td></tr>
+        <tr><td>Cars</td><td>{{ car_count }}</td></tr>
+        {% endif %}
+        <tr><td>Parking lots</td><td>{{ lot_count }}</td></tr>
+        <tr><td>Parking spots</td><td>{{ spot_count }}</td></tr>
+        <tr><td>Occupied spots</td><td>{{ occupied_count }}</td></tr>
+        <tr><td>Free spots</td><td>{{ free_count }}</td></tr>
+        <tr><td>Tickets</td><td>{{ ticket_count }}</td></tr>
+        <tr><td>Payments</td><td>{{ payment_count }}</td></tr>
+        <tr><td>Total money collected (status Paid)</td><td>UGX {{ total_paid }}</td></tr>
+    </table>
+
+    <h3>Parking spots</h3>
+    <p>Green = free, red = occupied.</p>
+
+    {% for block in lot_blocks %}
+        <h4>{{ block.lot.lot_name }} - {{ block.lot.location }} ({{ block.free }} free of {{ block.lot.capacity }})</h4>
+        {% for row in block.rows %}
+            {% if row.ticket %}
+                <div class="spot-box occupied">
+                    <b>Spot {{ row.number }}</b><br>
+                    {{ row.ticket.car_plate }}
+                </div>
+            {% else %}
+                <div class="spot-box free">
+                    <b>Spot {{ row.number }}</b><br>
+                    Free
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% empty %}
+        {% if user.is_staff %}
+            <p>No parking lots yet. <a href="{% url 'lot_add' %}" class="js-modal-trigger">Add a parking lot</a> first. Its spots are created automatically.</p>
+        {% else %}
+            <p class="warning">No lot is assigned to you yet. Ask the manager to assign you a lot.</p>
+        {% endif %}
+    {% endfor %}
+
+    <h3>Cars parked right now</h3>
+    <table>
+        <tr>
+            <th>Car plate</th><th>Model</th><th>Owner</th><th>Phone</th>
+            <th>Spot</th><th>Entry time</th><th>Hours so far</th><th>Fee so far (UGX)</th><th>Action</th>
+        </tr>
+        {% for row in parked_rows %}
+        <tr>
+            <td>{{ row.ticket.car_plate }}</td>
+            <td>{{ row.car.model }}</td>
+            <td>{{ row.owner }}</td>
+            <td>{{ row.owner.phone_no }}</td>
+            <td>{{ row.ticket.spot }}</td>
+            <td>{{ row.ticket.entry_time }}</td>
+            <td>{{ row.hours }}</td>
+            <td>{{ row.fee }}</td>
+            <td><a href="{% url 'checkout' row.ticket.pk %}" class="button js-modal-trigger">Check out</a></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="9">No cars are parked right now.</td></tr>
+        {% endfor %}
+    </table>
+{% endblock %}

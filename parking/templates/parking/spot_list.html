@@ -1,0 +1,35 @@
+{% extends 'parking/base.html' %}
+
+{% block title %}Parking Spots{% endblock %}
+
+{% block content %}
+    <h2>Parking Spots</h2>
+    <p>The spots are created automatically when you add a lot. {% if user.is_staff %}To get more or fewer spots, edit the capacity of the lot in <a href="{% url 'lot_list' %}">Parking Lots</a>.{% endif %}</p>
+
+    {% for block in lot_blocks %}
+        <h3>{{ block.lot.lot_name }} - {{ block.lot.location }} ({{ block.free }} free of {{ block.lot.capacity }})</h3>
+        <table>
+            <tr><th>Spot</th><th>Status</th><th>Car plate</th><th>Parked since</th></tr>
+            {% for row in block.rows %}
+            <tr>
+                <td>Spot {{ row.number }}</td>
+                {% if row.ticket %}
+                    <td>Occupied</td>
+                    <td>{{ row.ticket.car_plate }}</td>
+                    <td>{{ row.ticket.entry_time }}</td>
+                {% else %}
+                    <td>Free</td>
+                    <td>-</td>
+                    <td>-</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    {% empty %}
+        {% if user.is_staff %}
+            <p>No parking lots yet. <a href="{% url 'lot_add' %}" class="js-modal-trigger">Add a parking lot</a> first.</p>
+        {% else %}
+            <p class="warning">No lot is assigned to you yet. Ask the manager to assign you a lot.</p>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

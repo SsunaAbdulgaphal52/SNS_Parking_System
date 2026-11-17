@@ -1,0 +1,39 @@
+{% extends 'parking/base.html' %}
+
+{% block title %}Tickets{% endblock %}
+
+{% block content %}
+    <h2>Tickets</h2>
+    {% if user.is_staff %}
+        <p><a href="{% url 'ticket_add' %}" class="button js-modal-trigger">Add Ticket</a></p>
+    {% else %}
+        <p>You can only see the data of your own lots.</p>
+    {% endif %}
+
+    <table>
+        <tr><th>ID</th><th>Car plate</th><th>Spot</th><th>Entry time</th><th>Exit time</th><th>Date</th>{% if user.is_staff %}<th>Actions</th>{% endif %}</tr>
+        {% for x in tickets %}
+        <tr>
+            <td>{{ x.ticket_id }}</td>
+            <td>{{ x.car_plate }}</td>
+            <td>{{ x.spot }}</td>
+            <td>{{ x.entry_time }}</td>
+            <td>{{ x.exit_time|default:"still parked" }}</td>
+            <td>{{ x.ticket_date }}</td>
+            {% if user.is_staff %}
+            <td>
+                <a href="{% url 'ticket_edit' x.pk %}" class="icon-btn edit js-modal-trigger" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
+
+                <!-- script.js asks "Are you sure?" before this form is sent -->
+                <form method="post" action="{% url 'ticket_delete' x.pk %}" class="delete-form">
+                    {% csrf_token %}
+                    <button type="submit" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                </form>
+            </td>
+            {% endif %}
+        </tr>
+        {% empty %}
+        <tr><td colspan="7">No tickets yet.</td></tr>
+        {% endfor %}
+    </table>
+{% endblock %}

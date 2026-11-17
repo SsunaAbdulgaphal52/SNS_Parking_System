@@ -1,0 +1,566 @@
+/* Our own styles for the CoolAdmin layout.
+   Everything starts with "body.app" so it only touches this system's pages
+   and never clashes with the template's own classes. */
+
+
+/* ---------- Brand and account menu ---------- */
+
+body.app .logo-mark i {
+    font-size: 15px;
+}
+
+/* The round letter that replaces the profile photo */
+body.app .avatar-initial {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--m-accent);
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+body.app .account-dropdown .info .avatar-initial {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+}
+
+/* Logout is a form with a button, so it needs the same look as the template's link */
+body.app .account-dropdown__footer form {
+    margin: 0;
+}
+
+body.app .account-dropdown__footer button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 9px 16px;
+    background: none;
+    border: 0;
+    text-align: left;
+    font-size: 13.5px;
+    color: var(--m-danger);
+    cursor: pointer;
+}
+
+body.app .account-dropdown__footer button:hover {
+    background: var(--m-surface-2);
+}
+
+body.app .account-dropdown__footer button i {
+    width: 16px;
+    font-size: 13px;
+}
+
+body.app .template-credit {
+    margin-top: 32px;
+    font-size: 12px;
+    color: var(--m-text-faint);
+}
+
+
+/* ---------- Headings and text ---------- */
+
+body.app .main-content h2,
+body.app .login-content h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--m-text);
+    margin: 0 0 14px;
+}
+
+body.app .main-content h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--m-text);
+    margin: 26px 0 8px;
+}
+
+body.app .main-content h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--m-text-muted);
+    margin: 18px 0 8px;
+}
+
+body.app .main-content p {
+    color: var(--m-text-muted);
+}
+
+body.app .main-content a {
+    color: var(--m-accent);
+}
+
+body.app .warning {
+    color: var(--m-danger);
+    font-weight: 600;
+}
+
+body.app .login-content h2 {
+    margin-top: 18px;
+}
+
+body.app .login-content p {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--m-text-muted);
+    text-align: center;
+}
+
+
+/* ---------- Tables ---------- */
+
+body.app .main-content table {
+    width: 100%;
+    margin: 12px 0 24px;
+    border-collapse: collapse;
+    background: var(--m-surface);
+    border: 1px solid var(--m-border);
+    border-radius: var(--m-radius);
+    font-size: 14px;
+}
+
+body.app .main-content th,
+body.app .main-content td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--m-border-soft);
+    text-align: left;
+    vertical-align: middle;
+}
+
+body.app .main-content th {
+    background: var(--m-surface-2);
+    color: var(--m-text-muted);
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+body.app .main-content tr:hover td {
+    background: var(--m-surface-2);
+}
+
+/* Wide tables scroll sideways on small screens */
+@media (max-width: 900px) {
+    body.app .main-content table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+
+/* ---------- Buttons ---------- */
+
+body.app .button,
+body.app .data-form button,
+body.app .print-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 14px;
+    margin-right: 6px;
+    background: var(--m-accent);
+    color: #fff !important;
+    border: 0;
+    border-radius: var(--m-radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+body.app .button:hover,
+body.app .data-form button:hover,
+body.app .print-button:hover {
+    background: var(--m-accent-hover);
+}
+
+/* Edit, receipt and delete icons in the tables */
+body.app .icon-btn,
+body.app .delete-form button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--m-radius-sm);
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+body.app .icon-btn {
+    background: var(--m-surface-2);
+    color: var(--m-accent) !important;
+}
+
+body.app .icon-btn:hover {
+    background: var(--m-accent);
+    color: #fff !important;
+}
+
+body.app .delete-form {
+    display: inline;
+    margin-left: 4px;
+}
+
+body.app .delete-form button {
+    background: var(--m-danger-soft);
+    color: var(--m-danger);
+}
+
+body.app .delete-form button:hover {
+    background: var(--m-danger);
+    color: #fff;
+}
+
+body.app .cancel-link {
+    margin-left: 10px;
+}
+
+body.app .modal .modal-title {
+    margin: 0;
+}
+
+body.app .modal .data-form {
+    margin-top: 0;
+}
+
+body.app .modal .data-form p:first-of-type {
+    margin-top: 0;
+}
+
+body.app .modal .modal-error {
+    color: var(--m-danger);
+    font-weight: 600;
+}
+
+
+/* ---------- Forms ---------- */
+
+body.app .main-content form.data-form {
+    margin-top: 14px;
+}
+
+body.app .data-form p {
+    margin: 0 0 14px;
+}
+
+body.app .data-form p:first-of-type {
+    margin-top: 18px;
+}
+
+body.app form.data-form label:not(.form-check-label):not(.au-checkbox):not(.btn) {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--m-text-muted);
+}
+
+body.app .data-form input:not([type="radio"]):not([type="checkbox"]),
+body.app .data-form select,
+body.app .data-form textarea {
+    width: 100%;
+    max-width: 420px;
+    height: 38px;
+    padding: 0 12px;
+    background: var(--m-surface);
+    border: 1px solid var(--m-border);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--m-text);
+    outline: none;
+}
+
+body.app .data-form select {
+    width: auto;
+    min-width: 260px;
+}
+
+body.app .data-form input:focus,
+body.app .data-form select:focus {
+    border-color: var(--m-accent);
+    box-shadow: 0 0 0 3px rgba(var(--m-accent-rgb), 0.15);
+}
+
+body.app .data-form input[type="checkbox"] {
+    margin-right: 6px;
+}
+
+body.app .data-form .helptext,
+body.app .data-form ul {
+    font-size: 12px;
+    color: var(--m-text-faint);
+}
+
+body.app .data-form ul {
+    padding-left: 18px;
+}
+
+body.app .errorlist {
+    margin: 4px 0 0;
+    padding: 0 !important;
+    list-style: none;
+    font-size: 13px;
+    color: var(--m-danger) !important;
+}
+
+body.app .login-content .data-form input:not([type="radio"]):not([type="checkbox"]) {
+    max-width: none;
+}
+
+body.app .login-content .data-form button {
+    width: 100%;
+    justify-content: center;
+}
+
+body.app .fee-box {
+    max-width: 420px;
+    padding: 10px 14px;
+    background: var(--m-warning-soft);
+    border: 1px solid var(--m-warning);
+    border-radius: var(--m-radius-sm);
+    color: var(--m-text);
+}
+
+
+/* ---------- Parking spots (free = green, occupied = red) ---------- */
+
+body.app .spot-box,
+body.app form.data-form label.spot-box:not(.form-check-label):not(.au-checkbox):not(.btn) {
+    position: relative;
+    display: inline-block;
+    width: 130px;
+    margin: 5px 8px 5px 0;
+    padding: 12px 10px;
+    border: 1px solid var(--m-border);
+    border-radius: var(--m-radius);
+    box-shadow: var(--m-shadow-xs);
+    text-align: center;
+    vertical-align: top;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+body.app .spot-box.free,
+body.app form.data-form label.spot-box.free:not(.form-check-label):not(.au-checkbox):not(.btn) {
+    background: var(--m-success-soft);
+    border-color: #a7f3d0;
+    color: #065f46;
+}
+
+body.app .spot-box.occupied {
+    background: var(--m-danger-soft);
+    border-color: #fecaca;
+    color: #991b1b;
+}
+
+body.app label.spot-box.free {
+    cursor: pointer;
+}
+
+/* The round radio button is hidden: clicking the green box chooses the spot */
+body.app label.spot-box.free input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+body.app label.spot-box.free:hover {
+    border-color: var(--m-success);
+}
+
+body.app label.spot-box.free:has(input:focus-visible) {
+    outline: 2px solid var(--m-accent);
+}
+
+/* The spot that was clicked */
+body.app form.data-form label.spot-box.free:not(.form-check-label):not(.au-checkbox):not(.btn):has(input:checked) {
+    background: #bbf7d0;
+    border: 2px solid var(--m-success);
+    padding: 11px 9px;
+}
+
+
+/* ---------- Receipt ---------- */
+
+body.app .receipt {
+    max-width: 640px;
+}
+
+body.app .receipt table {
+    margin-bottom: 16px;
+}
+
+
+/* ---------- Printing: only the receipt, no menu ---------- */
+
+@media print {
+    body.app .menu-sidebar,
+    body.app .header-desktop,
+    body.app .header-mobile,
+    body.app .no-print,
+    body.app .template-credit,
+    body.app .skip-link {
+        display: none !important;
+    }
+
+    body.app .page-container {
+        padding-left: 0 !important;
+        margin-left: 0 !important;
+    }
+
+    body.app .section__content--p30 {
+        padding: 0 !important;
+    }
+
+    body.app {
+        background: #fff;
+    }
+}
+
+
+/* ---------- Pop-up forms (add, edit, check out, park, pay) ---------- */
+
+body.app .modal-content {
+    border: 0;
+    border-radius: 14px;
+    padding: 10px 14px 18px;
+}
+
+body.app .modal-header {
+    border-bottom: 0;
+}
+
+body.app .modal .modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--m-text);
+}
+
+/* The fields sit in two columns */
+body.app .modal .data-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+    margin-top: 0;
+}
+
+body.app .modal .data-form p,
+body.app .modal .data-form > ul {
+    margin: 0 0 14px;
+}
+
+/* Things that need the whole width */
+body.app .modal .data-form > ul,
+body.app .modal .data-form .full,
+body.app .modal .data-form .fee-box,
+body.app .modal .data-form .form-buttons,
+body.app .modal .data-form p:has(input[type="checkbox"]),
+body.app .modal .data-form p:has(input[type="hidden"][name="ticket"]),
+body.app .modal .data-form p:has(select#ticket-select),
+body.app .modal .data-form p:has(#id_email),
+body.app .modal .data-form p:has(#id_address) {
+    grid-column: 1 / -1;
+}
+
+body.app .modal .data-form input:not([type="radio"]):not([type="checkbox"]),
+body.app .modal .data-form select {
+    width: 100%;
+    max-width: none;
+}
+
+body.app .modal .data-form label:not(.spot-box) {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--m-text);
+}
+
+/* The red star on required fields */
+body.app label.required::after {
+    content: " *";
+    color: var(--m-danger);
+}
+
+/* Save (dark) and Cancel (light grey) side by side */
+body.app .form-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+body.app .form-buttons button,
+body.app .form-buttons .cancel-link {
+    display: inline-flex;
+    align-items: center;
+    height: 38px;
+    padding: 0 20px;
+    margin: 0;
+    border-radius: var(--m-radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+body.app .form-buttons button {
+    background: #3f3f46;
+    color: #fff;
+}
+
+body.app .form-buttons button:hover {
+    background: #27272a;
+}
+
+body.app .form-buttons .cancel-link {
+    background: #ececec;
+    color: #333 !important;
+}
+
+body.app .form-buttons .cancel-link:hover {
+    background: #dcdcdc;
+}
+
+@media (max-width: 576px) {
+    body.app .modal .data-form {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ---------- Check out button in the "Cars parked right now" table ---------- */
+
+body.app .checkout-form {
+    margin: 0;
+}
+
+body.app .checkout-form button {
+    white-space: nowrap;
+    border: 0;
+}
+
+
+/* ---------- Fix: the invisible theme-switcher box was blocking clicks ---------- */
+/* The bubble at the bottom-right has a hidden panel above it. The panel ignored
+   clicks, but the box around it did not, so it covered buttons (like Check out)
+   near the bottom-right of the page. Now only the round button (and the panel
+   while it is open) can be clicked. */
+
+body.app .theme-switcher {
+    pointer-events: none;
+}
+
+body.app .theme-switcher__toggle {
+    pointer-events: auto;
+}
+
+body.app .theme-switcher.is-open .theme-switcher__panel {
+    pointer-events: auto;
+}

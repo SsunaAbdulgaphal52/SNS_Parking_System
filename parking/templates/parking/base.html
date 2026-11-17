@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}SNS Parking System{% endblock %} | SNS Parking System</title>
+
+
+    <link href="{% static 'parking/template/css/font-face.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'parking/template/vendor/fontawesome-7.3.1/css/all.min.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'parking/template/vendor/bootstrap-5.3.8.min.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'parking/template/vendor/css-hamburgers/hamburgers.min.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'parking/template/css/theme.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'parking/template/css/app.css' %}" rel="stylesheet" media="all">
+
+    <link href="{% static 'parking/style.css' %}?v=8" rel="stylesheet" media="all">
+</head>
+
+<body class="app{% if not user.is_authenticated %} auth-page{% endif %}">
+
+{% if user.is_authenticated %}
+
+    <div class="page-wrapper">
+
+        <header class="header-mobile d-block d-lg-none">
+            <div class="header-mobile__bar">
+                <div class="container-fluid">
+                    <div class="header-mobile-inner">
+                        <a class="logo auth-brand" href="{% url 'dashboard' %}">
+                            <span class="logo-mark" aria-hidden="true"><i class="fa-solid fa-square-parking"></i></span>
+                            <span class="logo-text">SNS Parking System</span>
+                        </a>
+                        <button class="hamburger hamburger--slider" type="button" aria-label="Toggle navigation">
+                            <span class="hamburger-box"><span class="hamburger-inner"></span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <nav class="navbar-mobile">
+                <div class="container-fluid">
+                    <ul class="navbar-mobile__list list-unstyled">
+                        {% include 'parking/_menu_items.html' %}
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Sidebar -->
+        <aside class="menu-sidebar" id="main-sidebar">
+            <div class="logo">
+                <a class="logo-link" href="{% url 'dashboard' %}" aria-label="Parking System home">
+                    <span class="logo-mark" aria-hidden="true"><i class="fa-solid fa-square-parking"></i></span>
+                    <span class="logo-text">SNS Parking System</span>
+                </a>
+                <button class="sidebar-close js-sidebar-toggle" type="button" aria-label="Close navigation">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="menu-sidebar__content js-scrollbar1">
+                <nav class="navbar-sidebar">
+                    <ul class="list-unstyled navbar__list">
+                        {% include 'parking/_menu_items.html' %}
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <div class="page-container">
+
+            <!-- Top bar -->
+            <header class="header-desktop">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="header-wrap">
+                            <button class="sidebar-toggle js-sidebar-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-sidebar">
+                                <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                            </button>
+
+                            <div class="header-button ms-auto">
+                                <div class="account-wrap">
+                                    <div class="account-item clearfix js-item-menu" role="button" tabindex="0" aria-haspopup="true" aria-label="Account menu">
+                                        <div class="image"><span class="avatar-initial">{{ user.username|first|upper }}</span></div>
+                                        <div class="content"><a class="js-acc-btn" href="#">{{ user.username }}</a></div>
+                                        <div class="account-dropdown js-dropdown">
+                                            <div class="info clearfix">
+                                                <div class="image"><span class="avatar-initial">{{ user.username|first|upper }}</span></div>
+                                                <div class="content">
+                                                    <h5 class="name">{{ user.username }}</h5>
+                                                    <span class="email">{% if user.is_staff %}Manager{% else %}Attendant{% endif %}</span>
+                                                </div>
+                                            </div>
+                                            <div class="account-dropdown__footer">
+                                                <!-- Logout must be a small form (POST) in newer Django versions -->
+                                                <form method="post" action="{% url 'logout' %}">
+                                                    {% csrf_token %}
+                                                    <button type="submit"><i class="fa-solid fa-power-off"></i>Logout</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- The page content goes here -->
+            <main class="main-content" id="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+{% else %}
+    
+    <main class="login-wrap" id="auth-form">
+        <div class="login-content">
+            <a href="{% url 'login' %}" class="auth-brand" aria-label="Parking System">
+                <span class="logo-mark" aria-hidden="true"><i class="fa-solid fa-square-parking"></i></span>
+                <span class="logo-text">Parking System</span>
+            </a>
+{% endif %}
+
+{% block content %}{% endblock %}
+
+{% if user.is_authenticated %}
+                        <p class="template-credit no-print">Parking System. Interface built with the CoolAdmin template (MIT license).</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+{% else %}
+        </div>
+    </main>
+{% endif %}
+
+        <div class="modal fade" id="form-modal" tabindex="-1" aria-labelledby="form-modal-title" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="form-modal-title"></h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="form-modal-body"></div>
+                </div>
+            </div>
+        </div>
+
+    <!-- CoolAdmin scripts, then our own script -->
+    <script src="{% static 'parking/template/js/vanilla-utils.js' %}"></script>
+    <script src="{% static 'parking/template/vendor/bootstrap-5.3.8.bundle.min.js' %}"></script>
+    <script src="{% static 'parking/template/js/bootstrap5-init.js' %}"></script>
+    <script src="{% static 'parking/template/js/main-vanilla.js' %}"></script>
+    <script src="{% static 'parking/template/js/modern-plugins.js' %}"></script>
+    <script src="{% static 'parking/script.js' %}?v=7"></script>
+</body>
+</html>

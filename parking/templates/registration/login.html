@@ -1,0 +1,15 @@
+{% extends 'parking/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <h2>Login</h2>
+
+    <form method="post" class="data-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+
+    <p>There is no public signup. Ask the manager to create your account.</p>
+{% endblock %}

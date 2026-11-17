@@ -1,0 +1,38 @@
+{% comment %}
+The menu links, used by the sidebar and by the mobile menu.
+"name" is the name of the current page (from urls.py) and decides which link is highlighted.
+{% endcomment %}
+{% with name=request.resolver_match.url_name %}
+<li class="{% if name == 'dashboard' %}active{% endif %}">
+    <a href="{% url 'dashboard' %}"><i class="fa-solid fa-gauge-high"></i>Dashboard</a>
+</li>
+<li class="{% if name == 'park_car' or name == 'park_lot' %}active{% endif %}">
+    <a href="{% url 'park_car' %}" class="js-modal-trigger"><i class="fa-solid fa-square-parking"></i>Park a Car</a>
+</li>
+<li class="{% if name == 'make_payment' %}active{% endif %}">
+    <a href="{% url 'make_payment' %}" class="js-modal-trigger"><i class="fa-solid fa-credit-card"></i>Make Payment</a>
+</li>
+<li class="{% if 'owner_' in name %}active{% endif %}">
+    <a href="{% url 'owner_list' %}"><i class="fa-solid fa-users"></i>Car Owners</a>
+</li>
+<li class="{% if 'car_' in name %}active{% endif %}">
+    <a href="{% url 'car_list' %}"><i class="fa-solid fa-car"></i>Cars</a>
+</li>
+<li class="{% if 'lot_' in name %}active{% endif %}">
+    <a href="{% url 'lot_list' %}"><i class="fa-solid fa-building"></i>Parking Lots</a>
+</li>
+<li class="{% if name == 'spot_list' %}active{% endif %}">
+    <a href="{% url 'spot_list' %}"><i class="fa-solid fa-table-cells"></i>Parking Spots</a>
+</li>
+<li class="{% if 'ticket_' in name or name == 'checkout' %}active{% endif %}">
+    <a href="{% url 'ticket_list' %}"><i class="fa-solid fa-ticket"></i>Tickets</a>
+</li>
+<li class="{% if 'payment_' in name or name == 'receipt' %}active{% endif %}">
+    <a href="{% url 'payment_list' %}"><i class="fa-solid fa-receipt"></i>Payments</a>
+</li>
+{% if user.is_staff %}
+<li class="{% if 'staff_' in name %}active{% endif %}">
+    <a href="{% url 'staff_list' %}"><i class="fa-solid fa-user-shield"></i>Staff</a>
+</li>
+{% endif %}
+{% endwith %}

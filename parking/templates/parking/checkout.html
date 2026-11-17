@@ -1,0 +1,29 @@
+{% extends 'parking/base.html' %}
+
+{% block title %}Check out{% endblock %}
+
+{% block content %}
+<div id="modal-page-content">
+    <h2>Check out car {{ ticket.car_plate }}</h2>
+
+    <table>
+        <tr><th>Car plate</th><td>{{ ticket.car_plate }}</td></tr>
+        <tr><th>Owner</th><td>{{ owner }}</td></tr>
+        <tr><th>Parking spot</th><td>{{ ticket.spot }}</td></tr>
+        <tr><th>Entry time</th><td>{{ ticket.entry_time }}</td></tr>
+        <tr><th>Exit time (now)</th><td>{{ now }}</td></tr>
+        <tr><th>Hours charged</th><td>{{ hours }} (1000 UGX per hour, part of an hour counts as a full hour)</td></tr>
+        <tr><th>Fee so far</th><td><b>UGX {{ fee }}</b></td></tr>
+    </table>
+
+    <p>Confirming saves the exit time. The payment is made later on the Make Payment page.</p>
+
+    <form method="post" class="data-form">
+        {% csrf_token %}
+        <div class="form-buttons">
+            <button type="submit">Confirm check out</button>
+            <a href="{% url 'dashboard' %}" class="cancel-link">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

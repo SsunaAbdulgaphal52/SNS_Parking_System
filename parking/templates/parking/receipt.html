@@ -1,0 +1,33 @@
+{% extends 'parking/base.html' %}
+
+{% block title %}Receipt {{ payment.payment_id }}{% endblock %}
+
+{% block content %}
+    <div class="receipt">
+        <h2>Parking Receipt</h2>
+        <p>Receipt number: <b>{{ payment.payment_id }}</b></p>
+
+        <table>
+            <tr><th>Lot</th><td>{{ lot.lot_name }}, {{ lot.location }}</td></tr>
+            <tr><th>Parking spot</th><td>Spot {{ spot_number }}</td></tr>
+            <tr><th>Car plate</th><td>{{ ticket.car_plate }}</td></tr>
+            <tr><th>Car</th><td>{{ car.model }} ({{ car.color }})</td></tr>
+            <tr><th>Owner</th><td>{{ owner }}</td></tr>
+            <tr><th>Entry time</th><td>{{ ticket.entry_time }}</td></tr>
+            <tr><th>Exit time</th><td>{{ ticket.exit_time }}</td></tr>
+            <tr><th>Hours charged</th><td>{{ hours }}</td></tr>
+            <tr><th>Payment method</th><td>{{ payment.method }}</td></tr>
+            <tr><th>Payment date</th><td>{{ payment.payment_date }}</td></tr>
+            <tr><th>Status</th><td>{{ payment.payment_status }}</td></tr>
+            <tr><th>Amount paid</th><td><b>UGX {{ payment.amount }}</b></td></tr>
+        </table>
+
+        <p>Thank you for parking with us.</p>
+
+        <p class="no-print">
+            <button type="button" id="print-button" class="print-button">Print receipt</button>
+            <a href="{% url 'dashboard' %}" class="cancel-link">Back to the dashboard</a>
+            <a href="{% url 'payment_list' %}" class="cancel-link">All payments</a>
+        </p>
+    </div>
+{% endblock %}

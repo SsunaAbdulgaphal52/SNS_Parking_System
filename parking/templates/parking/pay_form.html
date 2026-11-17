@@ -1,0 +1,63 @@
+{% extends 'parking/base.html' %}
+
+{% block title %}Make Payment{% endblock %}
+
+{% block content %}
+<div id="modal-page-content">
+    <h2>Make a Payment</h2>
+
+    {% if unpaid_tickets %}
+        <!-- Step 1: choose the ticket. script.js sends this form when the choice changes -->
+        <form method="get" action="{% url 'make_payment' %}" id="ticket-select-form" class="data-form">
+            <p>
+                <label for="ticket-select">Ticket to pay for</label>
+                <select name="ticket" id="ticket-select">
+                    <option value="">-- choose a ticket --</option>
+                    {% for t in unpaid_tickets %}
+                        <option value="{{ t.pk }}" {% if ticket and ticket.pk == t.pk %}selected{% endif %}>
+                            Ticket {{ t.ticket_id }} - {{ t.car_plate }} - {{ t.spot }}
+                            {% if t.exit_time %}(left){% else %}(parked){% endif %}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Show amount</button>
+            </p>
+        </form>
+    {% else %}
+        <p>There are no unpaid tickets.</p>
+    {% endif %}
+
+    {% if ticket %}
+        <!-- Step 2: the amount is calculated by the system -->
+        <table>
+            <tr><th>Car plate</th><td>{{ ticket.car_plate }}</td></tr>
+            <tr><th>Owner</th><td>{{ owner }}</td></tr>
+            <tr><th>Parking spot</th><td>{{ ticket.spot }}</td></tr>
+            <tr><th>Entry time</th><td>{{ ticket.entry_time }}</td></tr>
+            <tr>
+                <th>Exit time</th>
+                <td>
+                    {% if ticket.exit_time %}
+                        {{ ticket.exit_time }}
+                    {% else %}
+                        Still parked. Paying will check the car out now.
+                    {% endif %}
+                </td>
+            </tr>
+            <tr><th>Hours charged</th><td>{{ hours }} (1000 UGX per hour, part of an hour counts as a full hour)</td></tr>
+            <tr><th>Amount to pay</th><td><b>UGX {{ fee }}</b></td></tr>
+        </table>
+
+        <!-- Step 3: choose the payment method and pay -->
+        <form method="post" action="{% url 'make_payment' %}" class="data-form">
+            {% csrf_token %}
+            <input type="hidden" name="ticket" value="{{ ticket.pk }}">
+            {{ form.as_p }}
+            <div class="form-buttons">
+                <button type="submit">Pay UGX {{ fee }}</button>
+                <a href="{% url 'payment_list' %}" class="cancel-link">Cancel</a>
+            </div>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'parking/base.html' %}
+
+{% block title %}Not allowed{% endblock %}
+
+{% block content %}
+    <h2>Not allowed</h2>
+    <p class="warning">You do not have permission to open this page or work in this lot.</p>
+    <p>Attendants can only work in the lots assigned to them. Ask the manager if you need access.</p>
+    <p><a href="{% url 'dashboard' %}" class="button">Back to the dashboard</a></p>
+{% endblock %}

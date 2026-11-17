@@ -1,0 +1,51 @@
+{% extends 'parking/base.html' %}
+
+{% block title %}Park a Car{% endblock %}
+
+{% block content %}
+<div id="modal-page-content">
+    <h2>Park a Car in {{ lot.lot_name }}</h2>
+    <p>{{ lot.location }}. Step 2: click a free (green) spot, then fill in the owner and the car.</p>
+
+    <form method="post" class="data-form">
+        {% csrf_token %}
+
+        <!-- The spots: free ones can be chosen, occupied ones are locked -->
+        <div class="full spot-area">
+        {% for row in rows %}
+            {% if row.ticket %}
+                <div class="spot-box occupied">
+                    <b>Spot {{ row.number }}</b><br>
+                    {{ row.ticket.car_plate }}
+                </div>
+            {% else %}
+                <label class="spot-box free">
+                    <input type="radio" name="spot" value="{{ row.spot.pk }}"
+                        {% if form.data.spot == row.spot.pk|stringformat:"s" %}checked{% endif %}>
+                    <b>Spot {{ row.number }}</b><br>
+                    Free
+                </label>
+            {% endif %}
+        {% empty %}
+            <p class="warning">This lot has no spots.</p>
+        {% endfor %}
+        </div>
+        {{ form.spot.errors }}
+
+        <!-- All the other fields of the form (the spot is already shown above) -->
+        {% for field in form %}
+            {% if field.name != 'spot' %}
+                <p>{{ field.label_tag }} {{ field }} {{ field.errors }}</p>
+            {% endif %}
+        {% endfor %}
+        {{ form.non_field_errors }}
+
+        <p class="full">If the car plate is already in the system, the saved car and owner are used.</p>
+
+        <div class="form-buttons">
+            <button type="submit">Park car</button>
+            <a href="{% url 'park_car' %}" class="cancel-link js-modal-trigger">Back to lots</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'parking/base.html' %}
+
+{% block title %}Car Owners{% endblock %}
+
+{% block content %}
+    <h2>Car Owners</h2>
+    {% if user.is_staff %}
+        <p><a href="{% url 'owner_add' %}" class="button js-modal-trigger">Add Car Owner</a></p>
+    {% else %}
+        <p>You can only see the data of your own lots.</p>
+    {% endif %}
+
+    <table>
+        <tr><th>ID</th><th>Name</th><th>Last name</th><th>Phone</th><th>Email</th><th>Address</th><th>Gender</th>{% if user.is_staff %}<th>Actions</th>{% endif %}</tr>
+        {% for x in owners %}
+        <tr>
+            <td>{{ x.owner_id }}</td>
+            <td>{{ x.name }}</td>
+            <td>{{ x.last_name }}</td>
+            <td>{{ x.phone_no }}</td>
+            <td>{{ x.email }}</td>
+            <td>{{ x.address }}</td>
+            <td>{{ x.gender }}</td>
+            {% if user.is_staff %}
+            <td>
+                <a href="{% url 'owner_edit' x.pk %}" class="icon-btn edit js-modal-trigger" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
+
+                <!-- script.js asks "Are you sure?" before this form is sent -->
+                <form method="post" action="{% url 'owner_delete' x.pk %}" class="delete-form">
+                    {% csrf_token %}
+                    <button type="submit" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                </form>
+            </td>
+            {% endif %}
+        </tr>
+        {% empty %}
+        <tr><td colspan="8">No car owners yet.</td></tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'parking/base.html' %}
+
+{% block title %}Parking Lots{% endblock %}
+
+{% block content %}
+    <h2>Parking Lots</h2>
+    {% if user.is_staff %}
+        <p><a href="{% url 'lot_add' %}" class="button js-modal-trigger">Add Parking Lot</a></p>
+    {% else %}
+        <p>You can only see the data of your own lots.</p>
+    {% endif %}
+
+    <table>
+        <tr><th>ID</th><th>Lot name</th><th>Capacity</th><th>Location</th>{% if user.is_staff %}<th>Actions</th>{% endif %}</tr>
+        {% for x in lots %}
+        <tr>
+            <td>{{ x.lot_id }}</td>
+            <td>{{ x.lot_name }}</td>
+            <td>{{ x.capacity }}</td>
+            <td>{{ x.location }}</td>
+            {% if user.is_staff %}
+            <td>
+                <a href="{% url 'lot_edit' x.pk %}" class="icon-btn edit js-modal-trigger" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
+
+                <!-- script.js asks "Are you sure?" before this form is sent -->
+                <form method="post" action="{% url 'lot_delete' x.pk %}" class="delete-form">
+                    {% csrf_token %}
+                    <button type="submit" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                </form>
+            </td>
+            {% endif %}
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No parking lots yet.</td></tr>
+        {% endfor %}
+    </table>
+{% endblock %}
